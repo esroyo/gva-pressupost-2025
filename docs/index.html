@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pressupost Generalitat Valenciana 2025</title>
+<script src="d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f5;color:#222}
+header{background:#1a5276;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:18px;font-weight:600}
+header .total{font-size:14px;opacity:.9}
+.controls{background:#fff;padding:10px 20px;border-bottom:1px solid #ddd;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.controls button{padding:6px 14px;border:1px solid #ccc;background:#fff;border-radius:4px;cursor:pointer;font-size:13px}
+.controls button.active{background:#1a5276;color:#fff;border-color:#1a5276}
+.controls button:hover:not(.active){background:#e8e8e8}
+.controls input[type=search]{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:13px;flex:1;min-width:150px;max-width:300px}
+.controls select{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:13px}
+#breadcrumb{background:#fff;padding:6px 20px;border-bottom:1px solid #eee;font-size:13px;display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+#breadcrumb span{cursor:pointer;color:#1a5276;padding:2px 6px;border-radius:3px}
+#breadcrumb span:hover{background:#eef4fa}
+#breadcrumb .sep{color:#999;cursor:default}
+#container{display:flex;gap:0;height:calc(100vh - 160px);min-height:400px}
+#chart{flex:1;position:relative;overflow:hidden}
+#chart svg{width:100%;height:100%}
+#detail{width:340px;background:#fff;border-left:1px solid #ddd;overflow-y:auto;padding:16px;display:none;position:relative}
+#detail.visible{display:block}
+#detail .title{font-size:16px;font-weight:600;margin-bottom:4px;padding-right:24px}
+#detail .detail-close{display:none;position:absolute;top:8px;right:8px;width:28px;height:28px;border:none;background:#eee;border-radius:50%;cursor:pointer;font-size:16px;line-height:1;text-align:center;color:#555;z-index:10}
+#detail .detail-close:hover{background:#ddd}
+#detailToggle{display:none}
+@media(max-width:768px){
+  #container{position:relative}
+  #detail{position:fixed;top:0;right:-340px;width:320px;height:100vh;height:100dvh;z-index:200;display:block;border-left:2px solid #ddd;box-shadow:-4px 0 20px rgba(0,0,0,.15);transition:right .25s ease;padding-top:48px}
+  #detail.visible{right:0}
+  #detail .detail-close{display:flex;align-items:center;justify-content:center;top:10px;right:10px}
+  #detailToggle{display:inline-block;padding:6px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;cursor:pointer;font-size:13px;margin-left:auto}
+  #detailToggle:hover{background:#e8e8e8}
+  body.detail-open{overflow:hidden}
+}
+#detail .title{font-size:16px;font-weight:600;margin-bottom:4px}
+#detail .sub{font-size:13px;color:#666;margin-bottom:8px}
+#detail .amount{font-size:24px;font-weight:700;color:#1a5276;margin-bottom:4px}
+#detail .pct{font-size:13px;color:#666;margin-bottom:12px}
+#detail .chapter-bar{margin:12px 0}
+#detail .chapter-row{display:flex;align-items:center;margin:3px 0;font-size:12px}
+#detail .chapter-row .bar{height:16px;border-radius:3px;min-width:4px;transition:width .3s}
+#detail .chapter-row .label{width:130px;padding-right:8px;text-align:right;color:#555}
+#detail .chapter-row .val{width:80px;text-align:right;padding-left:8px;font-weight:500}
+#detail .chapter-row .pct2{width:50px;text-align:right;padding-left:8px;color:#888}
+#detail .source{margin-top:12px;padding-top:12px;border-top:1px solid #eee}
+#detail .source a{color:#1a5276;font-size:12px;display:block;padding:2px 0}
+#detail .source a:hover{text-decoration:underline}
+.tooltip{position:absolute;background:rgba(0,0,0,.85);color:#fff;padding:8px 12px;border-radius:5px;font-size:13px;pointer-events:none;z-index:100;display:none;max-width:280px;line-height:1.4}
+.tooltip .tt-amount{font-weight:600}
+.node-label{pointer-events:none;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.node-label.small{font-size:9px}
+.node-label.tiny{font-size:7px}
+.search-highlight{outline:3px solid #000;outline-offset:-3px;box-shadow:inset 0 0 0 1px #fff}
+.zoom-btn{position:absolute;top:10px;right:10px;padding:5px 10px;border:1px solid #ccc;background:#fff;border-radius:4px;cursor:pointer;font-size:12px;display:none}
+.zoom-btn:hover{background:#e8e8e8}
+#legend{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,.92);border-radius:6px;padding:8px 12px;font-size:12px;display:none;box-shadow:0 1px 4px rgba(0,0,0,.15);max-width:280px}
+#legend .legend-title{font-weight:600;margin-bottom:4px;font-size:11px;color:#444}
+#legend .legend-row{display:flex;align-items:center;gap:6px;margin:2px 0}
+#legend .legend-swatch{width:12px;height:12px;border-radius:2px;flex-shrink:0}
+#legend .legend-label{color:#333;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pressupost Generalitat Valenciana 2025</h1>
+  <div class="total" id="headerTotal">Carregant...</div>
+</header>
+
+<div id="breadcrumb"></div>
+
+<div class="controls">
+  <div style="display:flex;gap:4px">
+    <button id="viewTreemap" class="active" onclick="switchView('treemap')">Treemap</button>
+    <button id="viewIcicle" onclick="switchView('icicle')">Icicle</button>
+    <button id="viewSunburst" onclick="switchView('sunburst')">Sunburst</button>
+  </div>
+  <select id="modeSelect" onchange="switchMode(this.value)">
+    <option value="section">Per seccions</option>
+    <option value="chapter">Per capítols</option>
+  </select>
+  <input type="search" id="searchInput" placeholder="Cerca programa o codi..." oninput="doSearch(this.value)">
+  <button id="zoomOutBtn" class="zoom-btn" onclick="zoomOut()">&#x2191; Nivell superior</button>
+  <button id="detailToggle" onclick="toggleDetail()">&#x1F4CB; Detall</button>
+</div>
+
+<div id="container">
+  <div id="chart"><div id="legend"></div></div>
+  <div id="detail"><button class="detail-close" onclick="closeDetail()">&#x2715;</button><div id="detailContent"></div></div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const dataUrl = 'data.json';
+let DATA, root, currentView = 'treemap', currentMode = 'section';
+let currentFocus = null, focusPath = [];
+let searchResults = [];
+
+const CHART = d3.select('#chart');
+const SVG = CHART.append('svg');
+const G = SVG.append('g');
+const TOOLTIP = d3.select('#tooltip');
+const DETAIL = d3.select('#detailContent');
+const DETAIL_PANEL = d3.select('#detail');
+const BREADCRUMB = d3.select('#breadcrumb');
+
+const WIDTH = () => CHART.node().clientWidth;
+const HEIGHT = () => CHART.node().clientHeight;
+
+const SECTION_COLORS = d3.scaleOrdinal(d3.schemeTableau10);
+const CHAPTER_COLORS = {1:'#4e79a7',2:'#59a14f',3:'#b07aa1',4:'#f28e2b',5:'#e15759',6:'#76b7b2',7:'#edc948',8:'#af7aa1',9:'#ff9da7'};
+const CHAPTER_LABELS = {1:'Personal',2:'Béns i serveis',3:'Financeres',4:'Transferències corrents',5:'Fons de contingència',6:'Inversions reals',7:'Transferències de capital',8:'Actius financers',9:'Passius financers'};
+const GROUP_COLOR_PALETTES = {};
+
+function initGroupColors(){
+  DATA.sections.forEach(s=>{
+    const dgs = s.display_groups;
+    if(!dgs) return;
+    const sorted = Object.entries(dgs).sort((a,b)=>a[1].order-b[1].order);
+    const n = sorted.length;
+    const base = d3.color(SECTION_COLORS(s.section_code));
+    const baseHue = base && !isNaN(base.h) ? base.h : 0;
+    GROUP_COLOR_PALETTES[s.section_code] = {};
+    sorted.forEach(([key,val],i)=>{
+      if(n===1){
+        GROUP_COLOR_PALETTES[s.section_code][key] = base.formatHex();
+      }else{
+        const hueStep = 280 / (n-1);
+        const hue = ((baseHue + hueStep * i - hueStep*(n-1)/2) % 360 + 360) % 360;
+        GROUP_COLOR_PALETTES[s.section_code][key] = d3.hsl(hue, 0.55, 0.58).formatHex();
+      }
+    });
+  });
+}
+
+function getGroupColor(sectionCode, groupKey){
+  if(GROUP_COLOR_PALETTES[sectionCode] && GROUP_COLOR_PALETTES[sectionCode][groupKey]){
+    return GROUP_COLOR_PALETTES[sectionCode][groupKey];
+  }
+  return SECTION_COLORS(sectionCode);
+}
+
+function getSectionForNode(d){
+  let n=d;while(n){if(n.data.type==='section') return n.data; n=n.parent}
+  return null;
+}
+
+function fmtK(v){return (v/1000).toLocaleString('ca-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+'M'}
+
+function buildChapterHierarchy(data){
+  const rootData = {name:'Generalitat Valenciana',children:[]};
+  for(let ch=1;ch<=9;ch++){
+    const ck = String(ch);
+    const chNode = {name:CHAPTER_LABELS[ch],code:'Cap. '+ch,type:'chapter',children:[]};
+    data.sections.forEach(s=>{
+      if(s.chapters && s.chapters[ck]>0){
+        const secNode = {name:s.name,code:s.section_code,type:'section',chapters:{[ck]:s.chapters[ck]},children:[],source_pdf:s.source_pdf,source_html:s.source_html,display_groups:s.display_groups};
+        (s.children||[]).forEach(sa=>{
+          const saNode = {name:sa.name,type:'sa',children:[]};
+          (sa.children||[]).forEach(dg=>{
+            const progArr = dg.type==='program' ? [dg] : (dg.children||[]);
+            progArr.forEach(p=>{
+              if(p.chapters && p.chapters[ck]>0){
+                saNode.children.push({name:p.name,code:p.code,type:'program',total:p.chapters[ck],chapters:{[ck]:p.chapters[ck]},source_pdfs:p.source_pdfs,display_group:p.display_group});
+              }
+            });
+          });
+          if(saNode.children.length>0) secNode.children.push(saNode);
+        });
+        if(secNode.children.length>0) chNode.children.push(secNode);
+      }
+    });
+    if(chNode.children.length>0) rootData.children.push(chNode);
+  }
+  return rootData;
+}
+
+function buildHierarchy(data){
+  const rootData = {name:'Generalitat Valenciana',children:[]};
+  data.sections.forEach(s=>{
+    const secNode = {name:s.name,code:s.section_code,type:'section',number:s.number,chapters:s.chapters,children:[],source_pdf:s.source_pdf,source_html:s.source_html,pct_of_total:s.pct_of_total,display_groups:s.display_groups};
+    (s.children||[]).forEach(sa=>{
+      const saNode = {name:sa.name,type:'sa',children:[]};
+      (sa.children||[]).forEach(dg=>{
+        if(dg.type==='program'){
+          const p = dg;
+          const pNode = {name:p.name,code:p.code,type:'program',total:p.total,chapters:p.chapters,source_pdfs:p.source_pdfs,display_group:p.display_group};
+          if(p.chapters && Object.keys(p.chapters).length>0) saNode.children.push(pNode);
+        }else{
+          const dgNode = {name:dg.name,type:'dg',children:[]};
+          (dg.children||[]).forEach(p=>{
+            const pNode = {name:p.name,code:p.code,type:'program',total:p.total,chapters:p.chapters,source_pdfs:p.source_pdfs,display_group:p.display_group};
+            if(p.chapters && Object.keys(p.chapters).length>0) dgNode.children.push(pNode);
+          });
+          if(dgNode.children.length>0) saNode.children.push(dgNode);
+        }
+      });
+      if(saNode.children.length>0) secNode.children.push(saNode);
+    });
+    rootData.children.push(secNode);
+  });
+  return rootData;
+}
+
+function render(){
+  SVG.selectAll('*').remove();
+  if(!root) return;
+  const focus = currentFocus || root;
+  const w = WIDTH(), h = HEIGHT();
+  SVG.attr('viewBox',[0,0,w,h]);
+  const g = SVG.append('g');
+
+  // Compute layout on the focused subtree
+  focus.sum(d=>d.total||0).sort((a,b)=>b.value-a.value);
+  if(!w||!h) return;
+
+  if(currentFocus){
+    const wrap = d3.hierarchy({children:[currentFocus.data]}).sum(d=>d.total||0);
+    if(currentView==='treemap'){
+      d3.treemap().size([w,h]).paddingOuter(3).paddingTop(20).paddingInner(2).round(true)(wrap);
+    }else if(currentView==='icicle'){
+      d3.partition().size([w,h]).padding(1)(wrap);
+    }else{
+      const r = Math.min(w,h)/2;
+      g.attr('transform',`translate(${w/2},${h/2})`);
+      d3.partition().size([2*Math.PI,r])(wrap);
+      wrap.each(d=>{d.x0=d.x0-Math.PI;d.x1=d.x1-Math.PI});
+    }
+    const src = wrap.children[0];
+    focus.x0=src.x0; focus.y0=src.y0; focus.x1=src.x1; focus.y1=src.y1;
+    focus.each(d=>{
+      if(d===focus) return;
+      const m = src.descendants().find(c=>c.data===d.data);
+      if(m){d.x0=m.x0;d.y0=m.y0;d.x1=m.x1;d.y1=m.y1}
+    });
+  }else{
+    if(currentView==='treemap'){
+      d3.treemap().size([w,h]).paddingOuter(3).paddingTop(20).paddingInner(2).round(true)(focus);
+    }else if(currentView==='icicle'){
+      d3.partition().size([w,h]).padding(1)(focus);
+    }else{
+      const r = Math.min(w,h)/2;
+      g.attr('transform',`translate(${w/2},${h/2})`);
+      d3.partition().size([2*Math.PI,r])(focus);
+      focus.each(d=>{d.x0=d.x0-Math.PI;d.x1=d.x1-Math.PI});
+    }
+  }
+
+  const nodes = focus.descendants().filter(d=>d.depth>0);
+
+  const cell = g.selectAll('g').data(nodes).join('g')
+    .attr('transform',d=>currentView==='sunburst'?null:`translate(${d.x0},${d.y0})`)
+    .style('cursor','pointer')
+    .on('click',(event,d)=>{event.stopPropagation();onClick(d)})
+    .on('mouseenter',(event,d)=>{showTooltip(event,d)})
+    .on('mousemove',(event,d)=>{moveTooltip(event)})
+    .on('mouseleave',()=>{hideTooltip()});
+
+  if(currentView==='sunburst'){
+    cell.append('path')
+      .attr('d',d3.arc().startAngle(d=>d.x0).endAngle(d=>d.x1).innerRadius(d=>d.y0).outerRadius(d=>d.y1).padAngle(0.005))
+      .attr('fill',d=>getNodeColor(d))
+      .attr('stroke','#fff')
+      .attr('stroke-width',1);
+    cell.append('text')
+      .attr('transform',d=>{
+        const a=(d.x0+d.x1)/2-Math.PI/2;
+        const r2=(d.y0+d.y1)/2;
+        return `rotate(${a*180/Math.PI}) translate(${r2},0) rotate(${a>Math.PI/2?180:0})`;
+      })
+      .attr('text-anchor','middle')
+      .attr('font-size','9px')
+      .attr('dy','0.35em')
+      .text(d=>d.data.name.length>20?d.data.name.slice(0,18)+'…':d.data.name);
+  }else{
+    cell.append('rect')
+      .attr('width',d=>Math.max(0,d.x1-d.x0))
+      .attr('height',d=>Math.max(0,d.y1-d.y0))
+      .attr('fill',d=>getNodeColor(d))
+      .attr('stroke','#fff')
+      .attr('stroke-width',1)
+      .attr('rx',2).attr('ry',2);
+    cell.append('text')
+      .attr('class',d=>{
+        const w2 = d.x1-d.x0;
+        if(w2<50) return 'node-label tiny';
+        if(w2<100) return 'node-label small';
+        return 'node-label';
+      })
+      .attr('x',4).attr('y',14)
+      .text(d=>{
+        const nm = d.data.code||d.data.name;
+        const w2 = d.x1-d.x0;
+        if(!d.children||d.children.length===0) return nm;
+        const totalFmt = fmtK(d.value);
+        return w2<120 ? nm : nm+'  ·  '+totalFmt;
+      });
+  }
+
+  if(searchResults.length) cell.classed('search-highlight',d=>searchResults.includes(d));
+  SVG.on('click',()=>{if(currentFocus) zoomOut()});
+  updateBreadcrumb();
+}
+
+function getNodeColor(d){
+  if(d.data.type==='chapter') return CHAPTER_COLORS[d.data.code.replace('Cap. ','')]||'#ccc';
+  if(d.data.type==='section') return SECTION_COLORS(d.data.code||d.data.name);
+  const inSectionZoom = currentFocus && currentFocus.ancestors().some(n => n.data.type==='section' && n.data.display_groups);
+  if(inSectionZoom && d.data.display_group){
+    const sec = getSectionForNode(d);
+    if(sec) return getGroupColor(sec.code, d.data.display_group);
+  }
+  let p=d;while(p.parent&&p.parent.data.type!=='section'&&p.parent.data.type!=='chapter') p=p.parent;
+  if(p.parent&&p.parent.data.type==='section') return d3.color(SECTION_COLORS(p.parent.data.code||p.parent.data.name)).darker(d.depth*0.12);
+  if(p.parent&&p.parent.data.type==='chapter') return d3.color(CHAPTER_COLORS[p.parent.data.code.replace('Cap. ','')]||'#ccc').darker(d.depth*0.12);
+  return '#ccc';
+}
+
+function updateLegend(secNode){
+  const leg = d3.select('#legend');
+  if(currentMode!=='section'||!secNode||!secNode.data.display_groups){
+    leg.style('display','none');
+    return;
+  }
+  const dgs = secNode.data.display_groups;
+  const sorted = Object.entries(dgs).sort((a,b)=>a[1].order-b[1].order);
+  let html = '<div class="legend-title">Grups</div>';
+  sorted.forEach(([key,val])=>{
+    const c = getGroupColor(secNode.data.code, key);
+    html += `<div class="legend-row"><span class="legend-swatch" style="background:${c}"></span><span class="legend-label">${val.label}</span></div>`;
+  });
+  leg.html(html).style('display','block');
+}
+
+function onClick(d){
+  if(d.depth===0) return; // root
+  currentFocus = d;
+  focusPath = d.ancestors().reverse();
+  render();
+  showDetail(d);
+  if(window.innerWidth<=768) DETAIL_PANEL.classed('visible',false);
+  d3.select('#zoomOutBtn').style('display','block');
+  const secNode = d.depth>=1 ? d.ancestors().reverse().find(n=>n.data.type==='section') : null;
+  updateLegend(secNode);
+}
+
+function zoomOut(){
+  if(!currentFocus) return;
+  const p = currentFocus.parent;
+  if(!p||p.depth===0){
+    currentFocus=null;focusPath=[];
+    d3.select('#zoomOutBtn').style('display','none');
+    d3.select('#legend').style('display','none');
+    render();
+    closeDetail();
+    return
+  }
+  onClick(p);
+}
+
+function showTooltip(event,d){
+  if(!d||d.depth===0) return;
+  const amt = d.data.total!==undefined ? fmtK(d.data.total) : '';
+  const pct = d.data.pct_of_total!==undefined ? ` (${d.data.pct_of_total}%)` : '';
+  const name = d.data.code ? `${d.data.code} ${d.data.name}` : d.data.name;
+  TOOLTIP.html(`<div class="tt-amount">${amt}${pct}</div><div>${name}</div>`).style('display','block');
+}
+
+function moveTooltip(event){
+  const tt = TOOLTIP.node();
+  TOOLTIP.style('left',(event.offsetX+15)+'px').style('top',(event.offsetY-10)+'px');
+}
+
+function hideTooltip(){TOOLTIP.style('display','none')}
+
+function showDetail(d){
+  const data = d.data;
+  let html = '';
+  if(data.code) html += `<div class="title">${data.code} – ${data.name}</div>`;
+  else html += `<div class="title">${data.name}</div>`;
+  if(data.display_group){
+    const sec = getSectionForNode(d);
+    if(sec&&sec.display_groups&&sec.display_groups[data.display_group]){
+      html += `<div class="sub" style="color:#666">${sec.display_groups[data.display_group].label}</div>`;
+    }
+  }
+  
+  if(d.depth===1 && data.pct_of_total!==undefined){
+    html += `<div class="sub">${data.pct_of_total}% del pressupost total</div>`;
+  }
+  
+  if(data.total!==undefined){
+    html += `<div class="amount">${fmtK(data.total)}</div>`;
+    html += `<div class="pct">${(data.total/1000).toLocaleString('ca-ES',{minimumFractionDigits:0,maximumFractionDigits:0})} milers d'euros</div>`;
+  }
+  
+  const ch = data.chapters || {};
+  const chTotal = data.total || Object.values(ch).reduce((a,b)=>a+b,0);
+  if(Object.keys(ch).length>0){
+    html += '<div class="chapter-bar">';
+    const sorted = Object.entries(ch).sort((a,b)=>b[1]-a[1]);
+    sorted.forEach(([k,v])=>{
+      const pct = chTotal>0 ? (v/chTotal*100).toFixed(1) : 0;
+      html += `<div class="chapter-row">`;
+      html += `<span class="label">${CHAPTER_LABELS[k]||'Cap. '+k}</span>`;
+      html += `<span class="bar" style="width:${Math.max(pct*1.5,4)}px;background:${CHAPTER_COLORS[k]||'#ccc'}"></span>`;
+      html += `<span class="val">${fmtK(v)}</span>`;
+      html += `<span class="pct2">${pct}%</span>`;
+      html += `</div>`;
+    });
+    html += '</div>';
+  }
+  
+  html += '<div class="source">';
+  const base = DATA.meta.source_pdf_base;
+  const secBase = DATA.meta.source_base;
+  let secData = null;
+  let n=d;while(n){if(n.data.type==='section'){secData=n.data;break}n=n.parent}
+  if(data.source_pdfs && data.source_pdfs.length>0){
+    data.source_pdfs.forEach(p=>{html += `<a href="${base}${p}" target="_blank">PDF: ${p.split('/').pop()}</a>`});
+  }
+  if(secData){
+    if(secData.source_pdf) html += `<a href="${secBase}${secData.source_pdf}" target="_blank">RPC - ${secData.name}</a>`;
+    if(secData.source_html) html += `<a href="${secBase}${secData.source_html}" target="_blank">Estructura de programes</a>`;
+  }
+  html += `<a href="${DATA.meta.source_url}" target="_blank">Index pressupost</a>`;
+  html += '</div>';
+  
+  DETAIL.html(html);
+  DETAIL_PANEL.classed('visible',true);
+  if(window.innerWidth<=768) document.body.classList.add('detail-open');
+}
+
+function closeDetail(){
+  DETAIL_PANEL.classed('visible',false);
+  document.body.classList.remove('detail-open');
+}
+
+function toggleDetail(){
+  if(DETAIL_PANEL.classed('visible')) { closeDetail(); return; }
+  if(!currentFocus) return;
+  if(!DETAIL.html()) showDetail(currentFocus);
+  DETAIL_PANEL.classed('visible',true);
+}
+
+function buildPathId(d){
+  const parts=[];
+  let n=d;
+  while(n.parent){parts.unshift(n.data.code||n.data.name);n=n.parent}
+  return parts.join('/');
+}
+
+function findNodeByPath(pathStr){
+  let parts=pathStr.split('/');
+  let n=root;
+  for(let i=0;i<parts.length;i++){
+    if(!n.children) return null;
+    n=n.children.find(c=>(c.data.code||c.data.name)===parts[i]);
+    if(!n) return null;
+  }
+  return n;
+}
+
+function updateBreadcrumb(){
+  const path = focusPath && focusPath.length>0 ? focusPath : [root].filter(Boolean);
+  let html = '<span onclick="breadcrumbRoot()">Generalitat</span>';
+  path.forEach((d,i)=>{
+    if(i===0) return;
+    html += '<span class="sep">›</span>';
+    const name = d.data.code ? `${d.data.code} ${d.data.name}` : d.data.name;
+    html += `<span onclick="breadcrumbGo('${buildPathId(d).replace(/'/g,"\\'")}')">${name.length>30?name.slice(0,28)+'…':name}</span>`;
+  });
+  BREADCRUMB.html(html);
+}
+
+function breadcrumbGo(pathStr){
+  const d = findNodeByPath(pathStr);
+  if(d&&d.parent){onClick(d)}else{breadcrumbRoot()}
+}
+
+function breadcrumbRoot(){
+  currentFocus=null;focusPath=[];
+  d3.select('#zoomOutBtn').style('display','none');
+  d3.select('#legend').style('display','none');
+  closeDetail();
+  render();
+}
+
+function switchView(view){
+  currentView = view;
+  d3.selectAll('#viewTreemap,#viewIcicle,#viewSunburst').classed('active',false);
+  d3.select(`#view${view.charAt(0).toUpperCase()+view.slice(1)}`).classed('active',true);
+  initTree();
+  render();
+}
+
+function switchMode(mode){
+  currentMode = mode;
+  initTree();
+  render();
+}
+
+function doSearch(q){
+  if(!q||q.length<2){d3.selectAll('.search-highlight').classed('search-highlight',false);return}
+  const ql = q.toLowerCase();
+  searchResults = [];
+  root.descendants().forEach(d=>{
+    if(d.data.name&&d.data.name.toLowerCase().includes(ql)||(d.data.code&&d.data.code.toLowerCase().includes(ql))){
+      searchResults.push(d);
+    }
+  });
+  render();
+}
+
+function initTree(){
+  const hierarchy = currentMode==='chapter' ? buildChapterHierarchy(DATA) : buildHierarchy(DATA);
+  root = d3.hierarchy(hierarchy);
+  root.x0=0;root.y0=0;
+}
+
+function resize(){
+  render();
+}
+
+window.addEventListener('resize',resize);
+
+fetch(dataUrl).then(r=>{
+  return r.json();
+}).then(data=>{
+  if(!data) throw new Error('data is null');
+  if(!data.meta) throw new Error('data.meta is undefined');
+  DATA = data;
+  document.getElementById('headerTotal').textContent = `Total: ${fmtK(DATA.meta.total_administration)}`;
+  initGroupColors();
+  initTree();
+  render();
+}).catch(err=>{
+  console.error('LOAD ERROR:', err);
+  document.getElementById('headerTotal').textContent = 'Error: ' + err.message;
+});
+</script>
+</body>
+</html>

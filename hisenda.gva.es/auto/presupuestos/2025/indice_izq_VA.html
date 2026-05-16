@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="es" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link rel="STYLESHEET" type="text/css" href="css/estilo_web_indice_new.css">
+<base target="principal" />
+</head>
+<body>
+
+<table id="tblIndice" class="tblIndice" cellspacing="0" cellpadding="0">
+
+<tr><td><img src="imagenes/button_ON.gif"><a href="T1_VA.html" target="_parent">Tom I</a></td></tr>
+
+<tr><td><img src="imagenes/button_ON.gif"><a href="T2_VA.html" target="_parent">Tom II</a></td></tr>
+
+<tr><td><img src="imagenes/button_ON.gif"><a href="T3_VA.html" target="_parent">Tom III</a></td></tr>
+
+<tr><td><img src="imagenes/button_ON.gif"><a href="T4_VA.html" target="_parent">Tom IV</a></td></tr>
+
+<tr><td><img src="imagenes/button_ON.gif"><a href="T5_VA.html" target="_parent">Tom V</a></td></tr>
+
+<tr><td><img src="imagenes/button_ON.gif"><a href="T6_VA.html" target="_parent">Tom VI</a></td></tr>
+
+<tr><td><img src="imagenes/button_ON.gif"><a href="T7_VA.html" target="_parent">Tom VII</a></td></tr>
+
+<tr><td><a href="Informes_VA.html" target="_parent">Informes</a></td></tr>
+
+</table>
+
+<p>&nbsp;</p>
+
+<p>
+	<a href="mailto:acedo_jor@gva.es;demiguel_jav@gva.es">
+				<img alt="" height="54" src="imagenes/email.jpg" width="58" class="auto-style2" /></a><a href="http://www.hisenda.gva.es/web/presupuestos/hacienda-presupuestosanteriores" target="_parent"><img alt="" class="auto-style2" height="50" src="imagenes/home.png" width="50" />
+	</a>
+</p>
+
+</body>
+<script language="javascript">
+
+	var tbl = document.getElementById("tblIndice");
+
+	if (tbl != null) {
+
+		/*if (tbl.rows[0] != null) {
+
+			tbl.rows[0].style.backgroundColor = "#365890";
+
+			tbl.rows[0].style.color = "#FFFFFF";
+
+		}*/
+
+		for (var i = 1; i < tbl.rows.length; i++) {
+
+			//tbl.rows[i].style.cursor = "pointer";
+
+			//tbl.rows[i].onmousemove = function () { this.style.backgroundColor = "#BDBDBD"; this.style.color = "#FFFFFF"; };
+			tbl.rows[i].onmousemove = function () { this.style.backgroundColor = ""; this.style.color = "";};
+
+			tbl.rows[i].onmouseout = function () { this.style.backgroundColor = ""; this.style.color = ""; };
+
+		}
+
+	}
+
+</script>
+
+</html>

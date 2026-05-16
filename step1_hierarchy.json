@@ -1,0 +1,2111 @@
+{
+  "meta": {
+    "generated_by": "step1_parse_html.py",
+    "total_sections": 20,
+    "total_programs": 174
+  },
+  "sections": [
+    {
+      "name": "Les Corts Valencianes",
+      "type": "section",
+      "number": "01",
+      "children": [
+        {
+          "name": "Les Corts Valencianes",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Les Corts Valencianes",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111A00",
+                  "name": "Activitat Legislativa"
+                }
+              ]
+            },
+            {
+              "name": "Agència Antifrau GV",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111J00",
+                  "name": "Agència Antifrau G.V."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0101",
+      "source_html": "T2_sec01_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0001-G0101xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Sindicatura de Comptes",
+      "type": "section",
+      "number": "02",
+      "children": [
+        {
+          "name": "Sindicatura de Comptes",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sindicatura de Comptes",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111B00",
+                  "name": "Control Extern del Sector Públic Valencià"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0102",
+      "source_html": "T2_sec02_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0002-G0102xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Consell Valencià de Cultura",
+      "type": "section",
+      "number": "03",
+      "children": [
+        {
+          "name": "Consell Valencià de Cultura",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Consell Valencià de Cultura",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111C00",
+                  "name": "Assessorament Cultural"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0103",
+      "source_html": "T2_sec03_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0003-G0103xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Consell Jurídic Consultiu",
+      "type": "section",
+      "number": "04",
+      "children": [
+        {
+          "name": "Consell Jurídic Consultiu",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Consell Jurídic Consultiu",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111F00",
+                  "name": "Alt Assessorament"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0104",
+      "source_html": "T2_sec04_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0004-G0104xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Presidència de la Generalitat",
+      "type": "section",
+      "number": "05",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121B00",
+                  "name": "Alta Direcció i Serveis Generals"
+                },
+                {
+                  "type": "program",
+                  "code": "126C00",
+                  "name": "Delegació de Protecció de Dades"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Relacions Institucionals i Transparència",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Relacions amb Les Corts",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "112B00",
+                  "name": "Relacions amb Les Corts"
+                }
+              ]
+            },
+            {
+              "name": "DG de Transparència i Participació",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "112G00",
+                  "name": "Consell Valencià de Transparència"
+                },
+                {
+                  "type": "program",
+                  "code": "112H00",
+                  "name": "Participació Ciutadana"
+                },
+                {
+                  "type": "program",
+                  "code": "112J00",
+                  "name": "Transparència"
+                },
+                {
+                  "type": "program",
+                  "code": "126B00",
+                  "name": "Oficina de Control de Conflictes d'Interessos"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Organització, coordinació i Relacions Institucionals",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "112C00",
+                  "name": "Organització i Coordinació Institucional"
+                }
+              ]
+            },
+            {
+              "name": "DG de l'Oficina de Premsa de la Presidència",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "112I00",
+                  "name": "Oficina de Premsa de la Presidència"
+                }
+              ]
+            },
+            {
+              "name": "Delegació del Consell a Alacant",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121L00",
+                  "name": "Desenvolupament Territorial del Consell a Alacant"
+                }
+              ]
+            },
+            {
+              "name": "Delegació del Consell a Castelló",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121N00",
+                  "name": "Desenvolupament Territorial del Consell a Castelló"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Esport",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "457A00",
+                  "name": "Foment de l'Activitat Esportiva"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA del Gabinet del President I Comunicació",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de la Secretaria del Gabinet del President",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111D00",
+                  "name": "Anàlisi i Polítiques Públiques"
+                },
+                {
+                  "type": "program",
+                  "code": "111G00",
+                  "name": "Gabinet d'Organització"
+                }
+              ]
+            },
+            {
+              "name": "DG de Comunicació i Promoció Institucional",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "462A00",
+                  "name": "Relacions Informatives i Comunicació"
+                },
+                {
+                  "type": "program",
+                  "code": "462B00",
+                  "name": "Promoció Institucional"
+                }
+              ]
+            },
+            {
+              "name": "DG de Projectes Estratègics",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111L00",
+                  "name": "Projectes Estratègics"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Presidència",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Coordinació de l'acció del Govern",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "112A00",
+                  "name": "Coordinació de l'Acció del Govern"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Administració Local",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "125A00",
+                  "name": "Administració Local i Organització Territorial del Consell"
+                },
+                {
+                  "type": "program",
+                  "code": "125B00",
+                  "name": "Lluita contra el despoblament i cohesió territorial"
+                }
+              ]
+            },
+            {
+              "name": "DG de Simplificació Administrativa",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121J00",
+                  "name": "Simplificació Administrativa"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Advocacia General de la Generalitat",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de l'Advocacia General",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "126A00",
+                  "name": "Assessorament i Defensa en Juí dels Interessos de la Generalitat"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Representació davant la Unió Europea i les Comunitats Autònomes",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Representació davant la Unió Europea i les Comunitats Autònomes",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "112D00",
+                  "name": "Relacions Externes"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0105",
+      "source_html": "T2_sec05_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0005-G0105xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Vicepresidència Primera i Conselleria de Serveis Socials, Igualtat i Habitatge",
+      "type": "section",
+      "number": "16",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "311A00",
+                  "name": "Direcció i Serveis Generals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Igualtat i Diversitat",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d'Igualtat i de l'Institut de les Dones",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "323A00",
+                  "name": "Igualtat d'oportunitats entre dones i homes"
+                }
+              ]
+            },
+            {
+              "name": "DG de Diversitat",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313H00",
+                  "name": "Diversitat"
+                }
+              ]
+            },
+            {
+              "name": "Comissionat o Comissionada per a la Lluita contra la Violència sobre la Dona",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "323B00",
+                  "name": "Lluita contra la Violència sobre la Dona"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Família i Serveis Socials",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Dependència i de les Persones Majors",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313F00",
+                  "name": "Persones Majors"
+                },
+                {
+                  "type": "program",
+                  "code": "313G00",
+                  "name": "Atenció primària i Dependència"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Inclusió i Cooperació al Desenvolupament",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "134A00",
+                  "name": "Cooperació Internacional i Desenvolupament Sostenible"
+                },
+                {
+                  "type": "program",
+                  "code": "313E00",
+                  "name": "Inclusió Social"
+                }
+              ]
+            },
+            {
+              "name": "DG de Família, Infància i Adolescència i Repte Demogràfic",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313C00",
+                  "name": "Família, Infància i Adolescència"
+                }
+              ]
+            },
+            {
+              "name": "DG de les Persones amb Discapacitat",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313D00",
+                  "name": "Persones amb Discapacitat"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA del Sistema Sociosanitari",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d'Infraestructures Sociosanitàries",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313J00",
+                  "name": "Planificació i Coordinació d'Infraestructures Sociosanitàries"
+                }
+              ]
+            },
+            {
+              "name": "DG de gestió del Sistema Sociosanitari i de l'Institut Valencià de Formació, Investigació i Qualitat dels SS.SS",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313I00",
+                  "name": "Gestió i Organització del Sistema"
+                },
+                {
+                  "type": "program",
+                  "code": "313K00",
+                  "name": "Institut Valencià de Formació, Investigació i Qualitat dels Serveis Socials"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Habitatge",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d'Habitatge",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "431H00",
+                  "name": "Vivenda i qualitat i innovació en la construcció"
+                },
+                {
+                  "type": "program",
+                  "code": "431I00",
+                  "name": "Funció social de la vivenda"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313M00",
+                  "name": "MRR. Mecanisme de Recuperació i Resiliència en Polítiques Inclusives"
+                },
+                {
+                  "type": "program",
+                  "code": "323M00",
+                  "name": "MRR. Mecanisme de Recuperació i Resiliència en Igualtat"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0116",
+      "source_html": "T2_sec16_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0006-G0116xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Vicepresidència Segona i Conselleria per a la Recuperació Econòmica i Social de la Comunitat Valenciana",
+      "type": "section",
+      "number": "26",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "120A00",
+                  "name": "Direcció i Serveis Generals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA per a la Recuperació Econòmica i Social",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG del Pla de Recuperació i Reconstrucció",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "120B00",
+                  "name": "Pla de Recuperació i Reconstrucció"
+                }
+              ]
+            },
+            {
+              "name": "DG de Coordinació, Control i Seguiment",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "120C00",
+                  "name": "Coordinació, Control i Seguiment"
+                }
+              ]
+            },
+            {
+              "name": "DG de Relacions i Gestió amb l'Administració Central i Europea per a la Recuperació Econòmica i Social",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "120D00",
+                  "name": "Relacions i gestió amb altres AA.PP per a la Recuperació Econòmica i Social"
+                }
+              ]
+            },
+            {
+              "name": "DG de Planejament, Anàlisi i Anticipació davant Catàstrofes Naturals",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "442G00",
+                  "name": "Pla de Prevenció, Protecció i Resposta davant Catàstrofes Naturals"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0126",
+      "source_html": "T2_sec26_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0007-G0126xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Hisenda i Economia",
+      "type": "section",
+      "number": "06",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "611A00",
+                  "name": "Direcció i Serveis Generals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Hisenda i Finançament",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Pressupostos",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "612B00",
+                  "name": "Tresor de la Generalitat"
+                },
+                {
+                  "type": "program",
+                  "code": "612E00",
+                  "name": "Pressupostos de la Generalitat i Administració de Nòmines"
+                }
+              ]
+            },
+            {
+              "name": "DG de Tributs i Joc",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "613A00",
+                  "name": "Tributs de la Generalitat i Joc"
+                }
+              ]
+            },
+            {
+              "name": "DG de Finançament",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "611B00",
+                  "name": "Finançament Autonòmic"
+                },
+                {
+                  "type": "program",
+                  "code": "631B00",
+                  "name": "Política Financera"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Economia",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Patrimoni",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "612C00",
+                  "name": "Patrimoni de la Generalitat"
+                },
+                {
+                  "type": "program",
+                  "code": "612G00",
+                  "name": "Ciutat Administrativa 9 d`Octubre"
+                },
+                {
+                  "type": "program",
+                  "code": "612H00",
+                  "name": "Parc Mòbil de la Generalitat"
+                },
+                {
+                  "type": "program",
+                  "code": "612I00",
+                  "name": "Centre Logístic i Arxiu Intermedi de la Generalitat"
+                }
+              ]
+            },
+            {
+              "name": "DG de Fons Europeus i Sector Públic",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "612K00",
+                  "name": "Coordinació fons MRR"
+                },
+                {
+                  "type": "program",
+                  "code": "612A00",
+                  "name": "Fons Europeus"
+                },
+                {
+                  "type": "program",
+                  "code": "615B00",
+                  "name": "Actuacions sobre el Sector Públic"
+                }
+              ]
+            },
+            {
+              "name": "D.G. d'Economia",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111H00",
+                  "name": "Responsabilitat Social"
+                },
+                {
+                  "type": "program",
+                  "code": "551A00",
+                  "name": "Elaboració i Difusió Estadística"
+                },
+                {
+                  "type": "program",
+                  "code": "615A00",
+                  "name": "Planificació i Previsió Econòmica"
+                },
+                {
+                  "type": "program",
+                  "code": "615C00",
+                  "name": "Model Econòmic"
+                }
+              ]
+            },
+            {
+              "name": "DG de Tecnologies de la Informació i Comunicacions",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121F00",
+                  "name": "Sistemes d'Informació"
+                },
+                {
+                  "type": "program",
+                  "code": "121G00",
+                  "name": "Telecomunicacions"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Intervenció General",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Intervenció General",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "612D00",
+                  "name": "Control Intern i Comptabilitat"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Institut Valencià de Finances",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Institut Valencià de Finances",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "631A00",
+                  "name": "Actuacions Sobre el Sector Financer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Agència Tributària Valenciana (ATV)",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Agència Tributària Valenciana (ATV)",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "613B00",
+                  "name": "Agència Tributària Valenciana (ATV)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121M00",
+                  "name": "MRR. Transformació i Innovació Digital"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0106",
+      "source_html": "T2_sec06_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0008-G0106xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Justícia i Administració Pública",
+      "type": "section",
+      "number": "07",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "141B00",
+                  "name": "Direcció i Serveis Generals"
+                },
+                {
+                  "type": "program",
+                  "code": "462C00",
+                  "name": "Processos Electorals i Consultes Populars"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Justícia i Autogovern",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG  de Justícia i Autogovern",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "126D00",
+                  "name": "Concòrdia i Foment de l'Autogovern"
+                },
+                {
+                  "type": "program",
+                  "code": "141A00",
+                  "name": "Administració de Justícia"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Atenció a les Víctimes i Accés a la Justícia",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "112F00",
+                  "name": "Atenció a les Víctimes i Accés a la Justícia"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Administració Pública",
+          "type": "sa",
+          "children": [
+            {
+              "name": "SA d'Administració Pública",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121A00",
+                  "name": "Atenció a la Ciutadania"
+                },
+                {
+                  "type": "program",
+                  "code": "121K00",
+                  "name": "Inspecció General de Serveis"
+                }
+              ]
+            },
+            {
+              "name": "DG de Funció Pública",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121C00",
+                  "name": "Formació i Estudis"
+                },
+                {
+                  "type": "program",
+                  "code": "121D00",
+                  "name": "Funció Pública"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0107",
+      "source_html": "T2_sec07_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0009-G0107xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Medi Ambient, Infraestructures i Territori",
+      "type": "section",
+      "number": "08",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "511A00",
+                  "name": "Direcció i Serveis Generals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Medi Ambient i Territori",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d'Urbanisme, Paisatge i Avaluació Ambiental",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "432A00",
+                  "name": "Urbanisme"
+                },
+                {
+                  "type": "program",
+                  "code": "442E00",
+                  "name": "Ordenació del Territori i Paisatge"
+                }
+              ]
+            },
+            {
+              "name": "DG de Medi Natural i Animal",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "442A00",
+                  "name": "Medi Natural i Avaluació Ambiental"
+                }
+              ]
+            },
+            {
+              "name": "DG de Qualitat i Educació Ambiental",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "442B00",
+                  "name": "Qualitat i Educació Ambiental"
+                },
+                {
+                  "type": "program",
+                  "code": "442C00",
+                  "name": "Canvi Climàtic"
+                },
+                {
+                  "type": "program",
+                  "code": "442D00",
+                  "name": "Transició Ecològica"
+                }
+              ]
+            },
+            {
+              "name": "DG  de Prevenció d'Incendis Forestals",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "442F00",
+                  "name": "Prevenció Incendis Forestals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Infraestructures i Transports",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d'Infraestructures Viàries",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "513A00",
+                  "name": "Infraestructures Públiques"
+                }
+              ]
+            },
+            {
+              "name": "DG de Costes, Ports i Aeroports",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "514A00",
+                  "name": "Ports, Aeroports i Costes"
+                }
+              ]
+            },
+            {
+              "name": "DG de Transports i Logística",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "513B00",
+                  "name": "Planificació, Transports i Logística"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "513M00",
+                  "name": "MRR. Actuacions millora de la mobilitat"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0108",
+      "source_html": "T2_sec08_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0010-G0108xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Educació, Cultura, Universitats i Ocupació",
+      "type": "section",
+      "number": "09",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "421A00",
+                  "name": "Direcció i Serveis Generals"
+                },
+                {
+                  "type": "program",
+                  "code": "421D00",
+                  "name": "Administració Educativa, Cultural, d'Universitats i Ocupació"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Infraestructures Educatives",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "421H00",
+                  "name": "Innovació Tecnològica Educativa"
+                },
+                {
+                  "type": "program",
+                  "code": "422I00",
+                  "name": "Infraestructures Educatives"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Educació",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Centres Docents",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "422A00",
+                  "name": "Ensenyament Primari"
+                },
+                {
+                  "type": "program",
+                  "code": "422B00",
+                  "name": "Ensenyament Secundari"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Ordenació Educativa i Política Lingüística",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "421C00",
+                  "name": "Ordenació Educativa"
+                },
+                {
+                  "type": "program",
+                  "code": "422D00",
+                  "name": "Promoció del Valencià i Gestió del Multilingüisme"
+                }
+              ]
+            },
+            {
+              "name": "DG de Personal Docent",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "421B00",
+                  "name": "Administració de Personal"
+                }
+              ]
+            },
+            {
+              "name": "Administració General de l'Ensenyament",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "421F00",
+                  "name": "Formació del Professorat"
+                },
+                {
+                  "type": "program",
+                  "code": "421G00",
+                  "name": "Administració General d'Ensenyament i Relacions Sindicals"
+                },
+                {
+                  "type": "program",
+                  "code": "422F00",
+                  "name": "Consell Escolar de la Comunitat Valenciana"
+                }
+              ]
+            },
+            {
+              "name": "DG de Formació Professional",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "422C00",
+                  "name": "Formació Professional"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Innovació i Inclusió Educativa",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "421E00",
+                  "name": "Avaluació, Innovació i Qualitat Educativa"
+                },
+                {
+                  "type": "program",
+                  "code": "422H00",
+                  "name": "Inclusió Educativa"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Universitats",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d' Universitats",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "422E00",
+                  "name": "Universitat i Estudis Superiors"
+                },
+                {
+                  "type": "program",
+                  "code": "422G00",
+                  "name": "Institut Superior d'Ensenyaments Artístics de la C.V."
+                }
+              ]
+            },
+            {
+              "name": "DG de Ciència i Investigació",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "542C00",
+                  "name": "Investigació, Desenvolupament Tecnològic i Innovació (I+D+i)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Ocupació",
+          "type": "sa",
+          "children": [
+            {
+              "name": "S.A d'Ocupació",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "322A00",
+                  "name": "Labora Servici Valencià d'Ocupació i Formació"
+                }
+              ]
+            },
+            {
+              "name": "DG de Treball, Cooperativisme i Seguretat Laboral",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "315A00",
+                  "name": "Condicions de Treball i Administració de les Relacions Laborals"
+                },
+                {
+                  "type": "program",
+                  "code": "322D00",
+                  "name": "Promoció del cooperativisme i de la Economia Social"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Cultura",
+          "type": "sa",
+          "children": [
+            {
+              "name": "SA de Cultura",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "453B00",
+                  "name": "Museu de Belles Arts"
+                }
+              ]
+            },
+            {
+              "name": "DG de Cultura",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "452A00",
+                  "name": "Llibre, Arxius i Biblioteques"
+                },
+                {
+                  "type": "program",
+                  "code": "453A00",
+                  "name": "Promoció i Activitat Cultural i Escènica"
+                }
+              ]
+            },
+            {
+              "name": "DG de Patrimoni Cultural",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "454A00",
+                  "name": "Patrimoni Artístic, Museus i Arts Plàstiques"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "422M00",
+                  "name": "MRR Educació i Formació Professional"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0109",
+      "source_html": "T2_sec09_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0011-G0109xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Sanitat",
+      "type": "section",
+      "number": "10",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "411A00",
+                  "name": "Direcció i Serveis Generals"
+                },
+                {
+                  "type": "program",
+                  "code": "411G00",
+                  "name": "Inspecció"
+                }
+              ]
+            },
+            {
+              "name": "DG de Personal",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "411C00",
+                  "name": "Administració de Recursos Humans"
+                },
+                {
+                  "type": "program",
+                  "code": "411D00",
+                  "name": "Escola Valenciana d'Estudis per a la Salut"
+                }
+              ]
+            },
+            {
+              "name": "DG de Gestió Econòmica, Contractació i Infraestructures",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "411B00",
+                  "name": "Administració Econòmica i Financera"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Sanitat",
+          "type": "sa",
+          "children": [
+            {
+              "name": "SA de Sanitat",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "412B25",
+                  "name": "Serveis Generals de la Secretaria Autonòmica de Sanitat"
+                }
+              ]
+            },
+            {
+              "name": "DG d' Atenció Hospitalària",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "412B22",
+                  "name": "Atenció Hospitalària"
+                },
+                {
+                  "type": "program",
+                  "code": "412B24",
+                  "name": "Prestacions Externes"
+                },
+                {
+                  "type": "program",
+                  "code": "412B26",
+                  "name": "Personal Sanitari Resident"
+                },
+                {
+                  "type": "program",
+                  "code": "412B28",
+                  "name": "Atenció Sanitària de Mitjana i Llarga Estada"
+                }
+              ]
+            },
+            {
+              "name": "DG de Farmàcia",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "412B23",
+                  "name": "Prestacions Farmacèutiques"
+                },
+                {
+                  "type": "program",
+                  "code": "412B27",
+                  "name": "Prestacions Externes Complementàries"
+                }
+              ]
+            },
+            {
+              "name": "DG de Salut Pública",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "412A00",
+                  "name": "Centres de Salut Pública"
+                },
+                {
+                  "type": "program",
+                  "code": "413A00",
+                  "name": "Salut Pública"
+                }
+              ]
+            },
+            {
+              "name": "DG d' Atenció Primària",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "412B21",
+                  "name": "Atenció Primària"
+                }
+              ]
+            },
+            {
+              "name": "DG de Salut Mental i Addiccions",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "313B00",
+                  "name": "Salut Mental i Addiccions"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Planificació, Informació i Transformació Digital",
+          "type": "sa",
+          "children": [
+            {
+              "name": "SA de Planificació, Informació i Transformació Digital",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "411H00",
+                  "name": "Serveis Generals de la Secretària Autonòmica de Planificació, Informació i Transformació Digital"
+                },
+                {
+                  "type": "program",
+                  "code": "412B29",
+                  "name": "Informació per a la Salut"
+                }
+              ]
+            },
+            {
+              "name": "DG d' Investigació i Innovació",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "411E00",
+                  "name": "Investigació en Ciències de la Salut"
+                }
+              ]
+            },
+            {
+              "name": "DG d' Informació Sanitària, Qualitat i Avaluació",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "411F00",
+                  "name": "Planificació i Atenció al Pacient"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mecanisme per a la Recuperació i la Resiliència (MRR)",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Mecanisme per a la Recuperació i la Resiliència. (MRR)",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "413M00",
+                  "name": "MRR Salut Pública"
+                },
+                {
+                  "type": "program",
+                  "code": "412M00",
+                  "name": "MRR. Assistència Sanitària"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0110",
+      "source_html": "T2_sec10_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0012-G0110xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Innovació, Indústria, Comerç i Turisme",
+      "type": "section",
+      "number": "11",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "721A00",
+                  "name": "Direcció i Serveis Generals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d' Innovació",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d' Innovació",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "121H00",
+                  "name": "Avanç de la societat digital"
+                },
+                {
+                  "type": "program",
+                  "code": "542D00",
+                  "name": "Desenvolupament Tecnològic i Innovació"
+                },
+                {
+                  "type": "program",
+                  "code": "542F00",
+                  "name": "Agència Valenciana de la Innovació"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Indústria, Comerç i Consum",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d' Indústria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "722A00",
+                  "name": "Política Industrial"
+                }
+              ]
+            },
+            {
+              "name": "DG de Comerç, Artesania i Consum",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "443A00",
+                  "name": "Protecció Persones Consumidores i Qualitat de Béns i Servicis"
+                },
+                {
+                  "type": "program",
+                  "code": "761A00",
+                  "name": "Ordenació i Promoció Comercial i Artesana"
+                }
+              ]
+            },
+            {
+              "name": "DG d' Energia i Mines",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "731A00",
+                  "name": "Energia i Mines"
+                }
+              ]
+            },
+            {
+              "name": "DG d' Emprenededoria i Internacionalització",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "322B00",
+                  "name": "Impuls de l'ecosistema emprenedor"
+                },
+                {
+                  "type": "program",
+                  "code": "762A00",
+                  "name": "Internacionalització"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA de Turisme",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG de Turisme",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "751A00",
+                  "name": "Ordenació i Promoció del Turisme"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Mecanisme per a la Recuperació i la Resiliència. (MRR)",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Mecanisme per a la Recuperació i la Resiliència. (MRR)",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "542M00",
+                  "name": "MRR. Transformació Digital i Tecnológica"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0111",
+      "source_html": "T2_sec11_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0014-G0111xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Agricultura, Aigua, Ramaderia i Pesca",
+      "type": "section",
+      "number": "12",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "711A00",
+                  "name": "Direcció i Serveis Generals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d' Agricultura, Aigua, Ramaderia i Pesca",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d' Producció Agrícola i Ramadera",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "531A00",
+                  "name": "Estructures Agràries"
+                },
+                {
+                  "type": "program",
+                  "code": "714B00",
+                  "name": "Ordenació i Millora de la Producció Agrària"
+                },
+                {
+                  "type": "program",
+                  "code": "714D00",
+                  "name": "Agricultura i Ramaderia"
+                }
+              ]
+            },
+            {
+              "name": "DG de l'Aigua i Desenvolupament Rural",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "512A00",
+                  "name": "Gestió i Infraestructures de Recursos Hidràulics"
+                },
+                {
+                  "type": "program",
+                  "code": "542B00",
+                  "name": "Desenvolupament Rural, Qualitat, Producció Ecològica, I+D+i"
+                }
+              ]
+            },
+            {
+              "name": "DG de Política Agrària Comú",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "542E00",
+                  "name": "Transferència de Tecnologia I+D+i"
+                },
+                {
+                  "type": "program",
+                  "code": "714C00",
+                  "name": "Política Agrària Comú"
+                }
+              ]
+            },
+            {
+              "name": "DG d' Indústria i Cadena Agroalimentària",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "714F00",
+                  "name": "Indústria i Cadena Agroalimentària, I+D+i"
+                }
+              ]
+            },
+            {
+              "name": "DG de Pesca",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "714A00",
+                  "name": "Ordenació i Millora de la Producció Pesquera"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0112",
+      "source_html": "T2_sec12_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0015-G0112xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Emergències i Interior",
+      "type": "section",
+      "number": "28",
+      "children": [
+        {
+          "name": "Sotssecretaria",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Sotssecretaria",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "221D00",
+                  "name": "Direcció i Serveis Generals"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "SA d'Emergències i Interior",
+          "type": "sa",
+          "children": [
+            {
+              "name": "DG d'Interior",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "221A00",
+                  "name": "Seguretat i Protecció Civil"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Emergències i Extinció d'Incendis",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "221C00",
+                  "name": "Emergències i Extinció d'Incendis"
+                }
+              ]
+            },
+            {
+              "name": "DG d'Innovació en Emergències",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "221E00",
+                  "name": "Innovació en Emergències"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0128",
+      "source_html": "T2_sec28_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0016-G0128xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Acadèmia Valenciana de la Llengua",
+      "type": "section",
+      "number": "17",
+      "children": [
+        {
+          "name": "Acadèmia Valenciana de la Llengua",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Acadèmia Valenciana de la Llengua",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "541A00",
+                  "name": "Investigació i Normalització Lingüística de l'Idioma Valencià"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0117",
+      "source_html": "T2_sec17_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0017-G0117xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Servei del Deute",
+      "type": "section",
+      "number": "19",
+      "children": [
+        {
+          "name": "Servei del Deute",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Servei del Deute",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "011A00",
+                  "name": "Servei del Deute"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0119",
+      "source_html": "T2_sec19_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0018-G0119xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Despeses Diverses",
+      "type": "section",
+      "number": "20",
+      "children": [
+        {
+          "name": "Despeses Diverses",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Despeses Diverses",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "462D00",
+                  "name": "Servei públic de Ràdio Televisió"
+                },
+                {
+                  "type": "program",
+                  "code": "612F00",
+                  "name": "Despeses Diverses"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0120",
+      "source_html": "T2_sec20_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0019-G0120xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Comité Econòmic i Social",
+      "type": "section",
+      "number": "24",
+      "children": [
+        {
+          "name": "Comité Econòmic i Social",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Comité Econòmic i Social",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111I00",
+                  "name": "Assessorament Social i Econòmic"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0124",
+      "source_html": "T2_sec24_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0020-G0124xxxx-xxxx-xxxxxx-VA.pdf"
+    },
+    {
+      "name": "Síndic de Greuges",
+      "type": "section",
+      "number": "25",
+      "children": [
+        {
+          "name": "Síndic de Greuges",
+          "type": "sa",
+          "children": [
+            {
+              "name": "Síndic de Greuges",
+              "type": "dg",
+              "children": [
+                {
+                  "type": "program",
+                  "code": "111E00",
+                  "name": "Defensa dels Drets Fonamentals dels Ciutadans"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "section_code": "G0125",
+      "source_html": "T2_sec25_VA.html",
+      "source_pdf": "pdf/RPC-25-10-A-0021-G0125xxxx-xxxx-xxxxxx-VA.pdf"
+    }
+  ]
+}

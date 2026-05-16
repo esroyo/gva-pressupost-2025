@@ -1,0 +1,48 @@
+﻿a:link {FONT: 95% "Verdana"; color:#000000;}
+a:visited {FONT: 95% "Verdana"; color:#C0C0C0;}
+a:active {FONT: 95% "Verdana"; color:#000000;}
+a:hover {FONT: 95% "Verdana"; color:#FFFFFF; background-color: #000000;}
+
+h1 { FONT: 95% "Verdana"; color: #000000;}
+h3 { FONT: 100% "Verdana"; color: #000000; line-height: 0%;}
+h4 { FONT: 95% "Verdana"; color: #000000; line-height: 0%;}
+tr { FONT: 95% "Verdana"; color: #000000;}
+td { FONT: 95% "Verdana"; color: #000000;}
+li { list-style: none;
+		FONT: 95% "Verdana"; color: #000000;}
+p { FONT: 95% "Verdana"; color: #000000;}
+h { FONT: 95% "Verdana"; color: #000000;}
+
+ul {
+	list-style: none;
+	FONT: 100% "Verdana"; color: #000000;
+	margin: 5;
+}
+.imagen {
+	text-align: center;
+}
+.link_castellano {
+	font-family: Verdana;
+	font-size: small;
+	text-align: right;
+}
+.link_valenciano {
+	font-family: Verdana;
+	font-size: small;
+	text-align: left;
+}
+
+acronym 
+{
+	FONT: 95% "Verdana"; color:#000000;
+}
+
+label {
+	cursor: default;
+	background-color:orangered;
+  }
+
+label_1 {
+	cursor: default;
+	background-color:gold;
+  }  

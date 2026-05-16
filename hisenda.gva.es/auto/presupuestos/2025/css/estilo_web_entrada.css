@@ -1,0 +1,29 @@
+﻿a:link {FONT: 95% "Verdana"; color:#000000}
+a:visited {FONT: 95% "Verdana"; color:#C0C0C0}
+a:active {FONT: 95% "Verdana"; color:#000000}
+
+tr { FONT: 95% "Verdana"; color: #000000;}
+td { FONT: 95% "Verdana"; color: #000000;}
+li { FONT: 95% "Verdana"; color: #000000;}
+p { FONT: 95% "Verdana"; color: #000000;margin-left:5em;}
+h { FONT: 115% "Verdana"; color: #000000;}
+ul{ FONT: 95% "Verdana"; color: #000000;}
+
+.imagen {
+	text-align: center;
+}
+.link_castellano {
+	font-family: Verdana;
+	font-size: small;
+	text-align: right;
+	padding-left:5em
+}
+.link_valenciano {
+	font-family: Verdana;
+	font-size: small;
+	text-align: left;
+}
+label {
+	cursor: default;
+	background-color: darkred;
+  }
