@@ -18,7 +18,7 @@ header .sub{font-size:14px;opacity:.9}
 #breadcrumb span{cursor:pointer;color:#1a5276;padding:2px 6px;border-radius:3px}
 #breadcrumb span:hover{background:#eef4fa}
 #breadcrumb .sep{color:#999;cursor:default}
-#detail{max-width:600px;margin:20px auto;background:#fff;border-radius:8px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.1);display:none}
+#detail{max-width:600px;margin:20px auto;background:#fff;border-radius:8px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.1);display:none;overflow-x:auto}
 #detail.visible{display:block}
 #detail .title{font-size:18px;font-weight:600;margin-bottom:4px}
 #detail .amount{font-size:28px;font-weight:700;color:#1a5276;margin-bottom:8px}
@@ -26,10 +26,16 @@ header .sub{font-size:14px;opacity:.9}
 #detail .chapter-bar{margin:12px 0}
 #detail .chapter-row{display:flex;align-items:center;margin:4px 0;font-size:13px;cursor:pointer;border-radius:4px;padding:2px 4px}
 #detail .chapter-row:hover{background:#f0f4f8}
-#detail .chapter-row .bar{height:18px;border-radius:3px;min-width:4px}
-#detail .chapter-row .label{width:160px;padding-right:8px;text-align:right;color:#555}
-#detail .chapter-row .val{width:100px;text-align:right;padding-left:8px;font-weight:500}
-#detail .chapter-row .pct2{width:50px;text-align:right;padding-left:8px;color:#888}
+#detail .chapter-row .label{width:160px;padding-right:8px;text-align:right;color:#555;flex-shrink:0}
+#detail .chapter-row .bar-wrap{flex:1;overflow:hidden;display:flex;align-items:center}
+#detail .chapter-row .bar-wrap .bar{display:block;height:18px;border-radius:3px;min-width:4px}
+#detail .chapter-row .val{width:100px;text-align:right;padding-left:8px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#detail .chapter-row .pct2{width:50px;text-align:right;padding-left:8px;color:#888;white-space:nowrap}
+@media(max-width:500px){
+  #detail .chapter-row .label{width:110px}
+  #detail .chapter-row .val{width:85px;overflow:hidden;text-overflow:ellipsis}
+  #detail .chapter-row .pct2{width:40px}
+}
 #detail .dotacio-table{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:13px}
 #detail .dotacio-table th{background:#eef4fa;padding:6px 10px;text-align:left;font-weight:600;border-bottom:2px solid #d0dae8}
 #detail .dotacio-table td{padding:5px 10px;border-bottom:1px solid #eee}
@@ -315,7 +321,7 @@ function showDetail(d) {
       const ch = nodeHash(c);
       html += `<div class="chapter-row" onclick="location.hash='#${ch}'">`;
       html += `<span class="label">${label}</span>`;
-      html += `<span class="bar" style="width:${Math.max(pct*2, 4)}px;background:${color}"></span>`;
+      html += `<span class="bar-wrap"><span class="bar" style="width:${pct}%;background:${color}"></span></span>`;
       html += `<span class="val">${formatFull(c.value)}</span>`;
       html += `<span class="pct2">${pct}%</span>`;
       html += '</div>';
