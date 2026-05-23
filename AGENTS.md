@@ -3,6 +3,9 @@
 ## Project structure
 
 - `docs/` — GitHub Pages static site (index.html + d3.min.js + data.json)
+- `docs/universitats/index.html` — D3 zoomable sunburst for DG d'Universitats
+- `docs/general/index.html` — Sunburst for the full GV 2025 budget (20 sections
+  → chapters)
 - `hisenda.gva.es/` — local mirror of source data (HTML + PDFs)
 - `step1_parse_html.py` — extracts hierarchy from T2_sec*.html →
   `step1_hierarchy.json`

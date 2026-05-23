@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISEA — Pressupost GV 2025</title>
+<script src="../d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f5;color:#222}
+header{background:#1a5276;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:18px;font-weight:600}
+header .sub{font-size:14px;opacity:.9}
+#container{max-width:1000px;margin:0 auto;padding:20px}
+#chart{position:relative;width:100%;aspect-ratio:1 / 1;max-width:800px;margin:0 auto}
+#chart svg{width:100%;height:100%}
+#breadcrumb{text-align:center;padding:8px 0;font-size:14px;color:#555;min-height:28px}
+#breadcrumb span{cursor:pointer;color:#1a5276;padding:2px 6px;border-radius:3px}
+#breadcrumb span:hover{background:#eef4fa}
+#breadcrumb .sep{color:#999;cursor:default}
+#detail{max-width:600px;margin:20px auto;background:#fff;border-radius:8px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.1);display:none}
+#detail.visible{display:block}
+#detail .title{font-size:18px;font-weight:600;margin-bottom:4px}
+#detail .amount{font-size:28px;font-weight:700;color:#1a5276;margin-bottom:8px}
+#detail .pct{font-size:14px;color:#666;margin-bottom:12px}
+#detail .chapter-bar{margin:12px 0}
+#detail .chapter-row{display:flex;align-items:center;margin:4px 0;font-size:13px;cursor:pointer;border-radius:4px;padding:2px 4px}
+#detail .chapter-row:hover{background:#f0f4f8}
+#detail .chapter-row .bar{height:18px;border-radius:3px;min-width:4px}
+#detail .chapter-row .label{width:160px;padding-right:8px;text-align:right;color:#555}
+#detail .chapter-row .val{width:100px;text-align:right;padding-left:8px;font-weight:500}
+#detail .chapter-row .pct2{width:50px;text-align:right;padding-left:8px;color:#888}
+#detail .dotacio-table{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:13px}
+#detail .dotacio-table th{background:#eef4fa;padding:6px 10px;text-align:left;font-weight:600;border-bottom:2px solid #d0dae8}
+#detail .dotacio-table td{padding:5px 10px;border-bottom:1px solid #eee}
+#detail .dotacio-table td.num{text-align:center;font-weight:600;color:#1a5276}
+#back{display:none;text-align:center;margin:0 auto 12px;font-size:13px;color:#999;font-style:italic}
+.tooltip{position:absolute;background:rgba(0,0,0,.85);color:#fff;padding:8px 12px;border-radius:5px;font-size:13px;pointer-events:none;z-index:100;display:none;max-width:280px;line-height:1.4}
+.tooltip .tt-amount{font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ISEA</h1>
+  <div class="sub" id="headerTotal">4.260.680 €</div>
+</header>
+
+<div id="container">
+  <div id="breadcrumb"></div>
+  <div id="back">Cliqueu al centre per pujar un nivell</div>
+  <div id="chart"></div>
+  <div id="detail"></div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const CHAPTER_LABELS = {1:'Personal',2:'Béns i serveis',3:'Financeres',4:'Transferències corrents',5:'Fons de contingència',6:'Inversions reals',7:'Transferències de capital',8:'Actius financers',9:'Passius financers'};
+const CHAPTER_COLORS = {1:'#4e79a7',2:'#59a14f',3:'#b07aa1',4:'#f28e2b',5:'#e15759',6:'#76b7b2',7:'#edc948',8:'#af7aa1',9:'#ff9da7'};
+const TYPE_COLORS = {program: '#4e79a7', chapter: '#59a14f', article: '#b07aa1', transfer: '#f28e2b', project: '#e15759', subproject: '#76b7b2'};
+
+const DATA = {"name":"ISEA","code":"422G00","type":"program","children":[{"name":"Personal","code":"1","type":"chapter","value":921.87,"detail":{"title":"Dotacions","items":[{"group":"Alts càrrecs","count":1,"detail":"Director/a (A1, nivell 26, C.E. E049)"},{"group":"Grup A1","count":8,"detail":"5@26/E049, 2@24/E046"},{"group":"Grup C1","count":3,"detail":"1@18/E035, 1@16/E032, 1@14/E019"}]}},{"name":"Béns i serveis","code":"2","type":"chapter","children":[{"name":"226 Despeses diverses","code":"226","type":"article","value":2410.31},{"name":"227 Treballs altres empreses","code":"227","type":"article","value":61.23},{"name":"224 Assegurances","code":"224","type":"article","value":28.5},{"name":"230 Dietes","code":"230","type":"article","value":10},{"name":"233 Altres indemnitzacions","code":"233","type":"article","value":8.19},{"name":"212 Edificis","code":"212","type":"article","value":4.7},{"name":"205 Arrendaments","code":"205","type":"article","value":4.26},{"name":"222 Comunicacions","code":"222","type":"article","value":3.3},{"name":"231 Locomoció","code":"231","type":"article","value":2.11},{"name":"220 Material oficina","code":"220","type":"article","value":1.7},{"name":"221 Subministraments","code":"221","type":"article","value":1.2}]},{"name":"Inversions reals","code":"6","type":"chapter","children":[{"name":"EE051 Eficiència Energètica","code":"EE051","type":"project","children":[{"name":"Fotov. l'Alcora","code":"EE05101","type":"subproject","value":79.99},{"name":"Fotov. Velluters","code":"EE05103","type":"subproject","value":4.35},{"name":"Fotov. Vivers","code":"EE05104","type":"subproject","value":129.04},{"name":"Fotov. Alcoi","code":"EE05105","type":"subproject","value":79.99},{"name":"Fotov. Castelló","code":"EE05106","type":"subproject","value":79.99}]},{"name":"QR051 Equipament reposició","code":"QR051","type":"project","value":429.95}]}]};
+
+const width = 800;
+const height = width;
+const radius = width / 6;
+function formatFull(v) { return Math.round(v * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' €'; }
+
+var selectedLeaf = null;
+var currentFocus = null;
+
+const TOOLTIP = d3.select('#tooltip');
+const DETAIL = d3.select('#detail');
+
+const svg = d3.select('#chart').append('svg')
+  .attr('viewBox', [-width / 2, -height / 2, width, width])
+  .style('font', '11px sans-serif');
+
+function getColor(d) {
+  if (d.data.code && CHAPTER_COLORS[d.data.code]) return CHAPTER_COLORS[d.data.code];
+  if (d.data.type === 'program') {
+    const root = d;
+    return '#4e79a7';
+  }
+  if (d.data.type === 'dg') return '#1a5276';
+  const typeColor = TYPE_COLORS[d.data.type];
+  if (typeColor) return d3.color(typeColor).darker(d.depth * 0.08).formatHex();
+  return d3.interpolateSpectral(d.depth / 8);
+}
+
+function getTypeColor(d) {
+  let base = '#999';
+  if (d.data.code && CHAPTER_COLORS[d.data.code]) base = CHAPTER_COLORS[d.data.code];
+  else if (TYPE_COLORS[d.data.type]) base = TYPE_COLORS[d.data.type];
+  return d3.color(base).darker(d.depth * 0.08).formatHex();
+}
+
+const hierarchy = d3.hierarchy(DATA)
+  .sum(d => d.value)
+  .sort((a, b) => b.value - a.value);
+
+const root = d3.partition()
+  .size([2 * Math.PI, hierarchy.height + 1])(hierarchy);
+
+root.each(d => d.current = d);
+
+const arc = d3.arc()
+  .startAngle(d => d.x0)
+  .endAngle(d => d.x1)
+  .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+  .padRadius(radius * 1.5)
+  .innerRadius(d => d.y0 * radius)
+  .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1));
+
+const path = svg.append('g')
+  .selectAll('path')
+  .data(root.descendants().slice(1))
+  .join('path')
+  .attr('fill', d => getTypeColor(d))
+  .attr('fill-opacity', d => arcVisible(d.current) ? (d.children ? 0.65 : 0.45) : 0)
+  .attr('pointer-events', d => arcVisible(d.current) ? 'auto' : 'none')
+  .attr('d', d => arc(d.current));
+
+path.style('cursor', d => d.children ? 'pointer' : 'default');
+
+path.append('title')
+  .text(d => {
+    const pathStr = d.ancestors().map(d => d.data.name).reverse().join(' / ');
+    return `${pathStr}\n${formatFull(d.value)}`;
+  });
+
+const label = svg.append('g')
+  .attr('pointer-events', 'none')
+  .attr('text-anchor', 'middle')
+  .style('user-select', 'none')
+  .selectAll('text')
+  .data(root.descendants().slice(1))
+  .join('text')
+  .attr('dy', '0.35em')
+  .attr('fill-opacity', d => +labelVisible(d.current))
+  .attr('transform', d => labelTransform(d.current))
+  .text(d => {
+    let n = d.data.name;
+    if (d.data.code && CHAPTER_LABELS[d.data.code]) n = CHAPTER_LABELS[d.data.code];
+    const maxLen = 20;
+    return n.length > maxLen ? n.slice(0, maxLen - 1) + '…' : n;
+  });
+
+const parent = svg.append('circle')
+  .datum(root)
+  .attr('r', radius)
+  .attr('fill', '#1a5276')
+  .attr('fill-opacity', 0.08)
+  .attr('stroke', '#1a5276')
+  .attr('stroke-width', 1.5)
+  .attr('pointer-events', 'all');
+
+function nodeHash(p) {
+  var codes = [], n = p;
+  while (n && n.data && n.data.code) { codes.unshift(n.data.code); n = n.parent; }
+  return codes.length ? codes.join('/') : '';
+}
+
+function updateHash(p) {
+  var h = nodeHash(p);
+  if (p === root) h = '';
+  var url = window.location.pathname + window.location.search + (h ? '#' + h : '');
+  history.replaceState(null, '', url);
+  document.title = (h || p === root ? (p.data.name.replace(/^\d{3}[A-Z0-9]\d{2} /, '') + ' — ') : '') + 'Pressupost GV 2025';
+}
+
+function updateSelectedLeaf() {
+  path.attr('stroke', null).attr('stroke-width', null);
+  if (selectedLeaf) {
+    path.filter(function(d) { return d === selectedLeaf; })
+      .attr('stroke', '#1a5276')
+      .attr('stroke-width', 3);
+  }
+}
+
+function clicked(event, p) {
+  currentFocus = p;
+  if (p.children) {
+    parent.datum(p.parent || root);
+    selectedLeaf = null;
+
+    root.each(d => d.target = {
+      x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+      x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+      y0: Math.max(0, d.y0 - p.depth),
+      y1: Math.max(0, d.y1 - p.depth)
+    });
+
+    const t = svg.transition().duration(event.altKey ? 7500 : 750);
+
+    path.transition(t)
+      .tween('data', d => {
+        const i = d3.interpolate(d.current, d.target);
+        return t => d.current = i(t);
+      })
+      .filter(function(d) {
+        return +this.getAttribute('fill-opacity') || arcVisible(d.target);
+      })
+      .attr('fill-opacity', d => arcVisible(d.target) ? (d.children ? 0.65 : 0.45) : 0)
+      .attr('pointer-events', d => arcVisible(d.target) ? 'auto' : 'none')
+      .attrTween('d', d => () => arc(d.current));
+
+    label.filter(function(d) {
+      return +this.getAttribute('fill-opacity') || labelVisible(d.target);
+    }).transition(t)
+      .attr('fill-opacity', d => +labelVisible(d.target))
+      .attrTween('transform', d => () => labelTransform(d.current));
+
+    t.on('end', updateSelectedLeaf);
+  } else {
+    selectedLeaf = p;
+    updateSelectedLeaf();
+  }
+
+  updateBreadcrumb(p);
+  showDetail(p);
+  updateHash(p);
+  if (p.parent) {
+    d3.select('#back').style('display', 'block');
+  } else {
+    d3.select('#back').style('display', 'none');
+  }
+}
+
+function arcVisible(d) {
+  return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
+}
+
+function labelVisible(d) {
+  return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
+}
+
+function labelTransform(d) {
+  const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+  const y = (d.y0 + d.y1) / 2 * radius;
+  return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+}
+
+function zoomOut() {
+  const p = parent.datum();
+  if (!p || !p.parent) {
+    parent.datum(root);
+    clicked({altKey: false}, root);
+    d3.select('#back').style('display', 'none');
+    return;
+  }
+  clicked({altKey: false}, p.parent);
+}
+
+function updateBreadcrumb(p) {
+  const bc = d3.select('#breadcrumb');
+  const ancestors = p ? p.ancestors().reverse() : [root];
+  let html = '';
+  ancestors.forEach((d, i) => {
+    if (i > 0) html += '<span class="sep"> &rsaquo; </span>';
+    let n = d.data.name;
+    if (d.data.code && CHAPTER_LABELS[d.data.code]) n = CHAPTER_LABELS[d.data.code];
+    const display = n.length > 40 ? n.slice(0, 38) + '…' : n;
+    html += `<span onclick="breadcrumbClick(${i})">${display}</span>`;
+  });
+  bc.html(html);
+}
+
+function breadcrumbClick(depth) {
+  const p = currentFocus || root;
+  const ancestors = p.ancestors().reverse();
+  if (depth < ancestors.length) {
+    clicked({altKey: false}, ancestors[depth]);
+  }
+}
+
+function expandDetail(str) {
+  if (!str || str.indexOf('@') < 0) return str;
+  return '<ul style="margin:0;padding-left:16px;font-size:12px;line-height:1.6">' +
+    str.split(', ').map(function(p) {
+      var parts = p.split('@');
+      if (parts.length < 2) return '<li>' + p + '</li>';
+      var cnt = parts[0], rest = parts[1];
+      var level = rest.split('/')[0], code = rest.split('/')[1];
+      var s = cnt + (cnt > 1 ? ' places' : ' plaça');
+      if (level) s += ', nivell ' + level;
+      if (code) s += ', codi ' + code;
+      return '<li>' + s + '</li>';
+    }).join('') + '</ul>';
+}
+
+function showDetail(d) {
+  let html = '';
+  const name = d.data.name.replace(/^\d{3}[A-Z0-9]\d{2} /, '');
+  html += `<div class="title">${name}</div>`;
+  html += `<div class="amount">${formatFull(d.value)}</div>`;
+
+  if (d.data.detail && d.data.detail.items) {
+    const det = d.data.detail;
+    html += `<div style="margin:8px 0 4px;font-weight:600;font-size:14px">${det.title}</div>`;
+    html += '<table class="dotacio-table"><tr><th>Grup</th><th>Places</th><th>Detall</th></tr>';
+    det.items.forEach(item => {
+      html += `<tr><td>${item.group}</td><td class="num">${item.count}</td><td>${expandDetail(item.detail)}</td></tr>`;
+    });
+    html += '</table>';
+  }
+
+  if (d.children && d.children.length > 0) {
+    html += '<div class="chapter-bar">';
+    d.children.sort((a,b) => b.value - a.value).forEach(c => {
+      const pct = (c.value / d.value * 100).toFixed(1);
+      const color = CHAPTER_COLORS[c.data.code] || TYPE_COLORS[c.data.type] || d3.schemeTableau10[c.depth % 10];
+      let label = c.data.name;
+      if (c.data.code && CHAPTER_LABELS[c.data.code]) label = CHAPTER_LABELS[c.data.code];
+      const ch = nodeHash(c);
+      html += `<div class="chapter-row" onclick="location.hash='#${ch}'">`;
+      html += `<span class="label">${label}</span>`;
+      html += `<span class="bar" style="width:${Math.max(pct*2, 4)}px;background:${color}"></span>`;
+      html += `<span class="val">${formatFull(c.value)}</span>`;
+      html += `<span class="pct2">${pct}%</span>`;
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  DETAIL.html(html).classed('visible', true);
+}
+
+svg.node().addEventListener('click', function(event) {
+  var d = event.target.__data__;
+  if (d) { clicked(event, d); return; }
+  parent.datum(root);
+  zoomOut();
+});
+
+function findNode(codes) {
+  var n = root, c;
+  if (root.data.code && codes[0] === root.data.code) codes = codes.slice(1);
+  for (var i = 0; n.children && i < codes.length; i++) {
+    c = codes[i];
+    n = n.children.find(function(ch) { return ch.data.code === c; });
+    if (!n) return null;
+  }
+  return n;
+}
+
+function navigateFromHash() {
+  var h = window.location.hash;
+  if (!h || h === '#') { parent.datum(root); zoomOut(); return; }
+  var n = findNode(h.slice(1).split('/'));
+  if (!n || n === root) { parent.datum(root); zoomOut(); return; }
+  var target = n.children ? n : (n.parent || root);
+  clicked({altKey: false}, target);
+  if (!n.children) {
+    selectedLeaf = n;
+    updateSelectedLeaf();
+    updateBreadcrumb(n);
+    showDetail(n);
+    updateHash(n);
+  }
+}
+
+updateBreadcrumb(root);
+setTimeout(navigateFromHash, 100);
+window.addEventListener('hashchange', navigateFromHash);
+</script>
+<footer style="text-align:center;color:#999;font-size:12px;padding:12px">
+<a style="color:#999" href="../general/">General</a> |
+<a style="color:#999" href="../universitats/">Universitats</a> |
+ISEA |
+Source: <a style="color:#999" href="https://hisenda.gva.es/auto/presupuestos/2025/index_val.html">hisenda.gva.es</a>
+</footer>
+</body>
+</html>

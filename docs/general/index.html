@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pressupost GV 2025</title>
+<script src="../d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f5;color:#222}
+header{background:#1a5276;color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:18px;font-weight:600}
+header .sub{font-size:14px;opacity:.9}
+#container{max-width:1000px;margin:0 auto;padding:20px}
+#chart{position:relative;width:100%;aspect-ratio:1 / 1;max-width:800px;margin:0 auto}
+#chart svg{width:100%;height:100%}
+#breadcrumb{text-align:center;padding:8px 0;font-size:14px;color:#555;min-height:28px}
+#breadcrumb span{cursor:pointer;color:#1a5276;padding:2px 6px;border-radius:3px}
+#breadcrumb span:hover{background:#eef4fa}
+#breadcrumb .sep{color:#999;cursor:default}
+#detail{max-width:600px;margin:20px auto;background:#fff;border-radius:8px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.1);display:none}
+#detail.visible{display:block}
+#detail .title{font-size:18px;font-weight:600;margin-bottom:4px}
+#detail .amount{font-size:28px;font-weight:700;color:#1a5276;margin-bottom:8px}
+#detail .chapter-bar{margin:12px 0}
+#detail .chapter-row{display:flex;align-items:center;margin:4px 0;font-size:13px;cursor:pointer;border-radius:4px;padding:2px 4px}
+#detail .chapter-row:hover{background:#f0f4f8}
+#detail .chapter-row .bar{height:18px;border-radius:3px;min-width:4px}
+#detail .chapter-row .label{width:160px;padding-right:8px;text-align:right;color:#555}
+#detail .chapter-row .val{width:100px;text-align:right;padding-left:8px;font-weight:500}
+#detail .chapter-row .pct2{width:50px;text-align:right;padding-left:8px;color:#888}
+#detail .src-link{margin-top:12px;font-size:13px}
+#detail .src-link a{color:#1a5276;text-decoration:none}
+#detail .src-link a:hover{text-decoration:underline}
+#back{display:none;text-align:center;margin:0 auto 12px;font-size:13px;color:#999;font-style:italic}
+.tooltip{position:absolute;background:rgba(0,0,0,.85);color:#fff;padding:8px 12px;border-radius:5px;font-size:13px;pointer-events:none;z-index:100;display:none;max-width:280px;line-height:1.4}
+.tooltip .tt-amount{font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pressupost Generalitat Valenciana 2025</h1>
+  <div class="sub" id="headerTotal"></div>
+</header>
+
+<div id="container">
+  <div id="breadcrumb"></div>
+  <div id="back">Cliqueu al centre per pujar un nivell</div>
+  <div id="chart"></div>
+  <div id="detail"></div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const CHAPTER_LABELS = {1:'Personal',2:'Béns i serveis',3:'Financeres',4:'Transferències corrents',5:'Fons de contingència',6:'Inversions reals',7:'Transferències de capital',8:'Actius financers',9:'Passius financers'};
+const CHAPTER_COLORS = {1:'#4e79a7',2:'#59a14f',3:'#b07aa1',4:'#f28e2b',5:'#e15759',6:'#76b7b2',7:'#edc948',8:'#af7aa1',9:'#ff9da7'};
+const TYPE_COLORS = {section:'#1a5276', sa:'#4e79a7', dg:'#59a14f', program:'#f28e2b', chapter:'#999'};
+const SOURCE_BASE = 'https://hisenda.gva.es/auto/presupuestos/2025/';
+
+const width = 800;
+const height = width;
+const radius = width / 6;
+function formatFull(v) { return Math.round(v * 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' €'; }
+
+var selectedLeaf = null;
+var currentFocus = null;
+var root = null;
+var path, label, parent, arc;
+var svg, DETAIL, TOOLTIP;
+
+function arcFill(d) {
+  var base;
+  if (d.data.code && CHAPTER_COLORS[d.data.code]) base = CHAPTER_COLORS[d.data.code];
+  else if (TYPE_COLORS[d.data.type]) base = TYPE_COLORS[d.data.type];
+  else base = '#999';
+  return d3.color(base).darker(d.depth * 0.1).formatHex();
+}
+
+function nodeHash(p) {
+  var codes = [], n = p;
+  while (n && n.data && n.data.code) { codes.unshift(n.data.code); n = n.parent; }
+  return codes.length ? codes.join('/') : '';
+}
+
+function updateHash(p) {
+  var h = nodeHash(p);
+  var url = window.location.pathname + window.location.search + (h ? '#' + h : '');
+  history.replaceState(null, '', url);
+  document.title = (h ? p.data.name + ' — ' : '') + 'Pressupost GV 2025';
+}
+
+function updateSelectedLeaf() {
+  path.attr('stroke', null).attr('stroke-width', null);
+  if (selectedLeaf) {
+    path.filter(function(d) { return d === selectedLeaf; })
+      .attr('stroke', '#1a5276')
+      .attr('stroke-width', 3);
+  }
+}
+
+function clicked(event, p) {
+  currentFocus = p;
+  if (p.children) {
+    parent.datum(p.parent || root);
+    selectedLeaf = null;
+
+    root.each(d => d.target = {
+      x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+      x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+      y0: Math.max(0, d.y0 - p.depth),
+      y1: Math.max(0, d.y1 - p.depth)
+    });
+
+    const t = svg.transition().duration(event.altKey ? 7500 : 750);
+
+    path.transition(t)
+      .tween('data', d => {
+        const i = d3.interpolate(d.current, d.target);
+        return t => d.current = i(t);
+      })
+      .filter(function(d) {
+        return +this.getAttribute('fill-opacity') || arcVisible(d.target);
+      })
+      .attr('fill-opacity', d => arcVisible(d.target) ? (d.children ? 0.65 : 0.45) : 0)
+      .attr('pointer-events', d => arcVisible(d.target) ? 'auto' : 'none')
+      .attrTween('d', d => () => arc(d.current));
+
+    label.filter(function(d) {
+      return +this.getAttribute('fill-opacity') || labelVisible(d.target);
+    }).transition(t)
+      .attr('fill-opacity', d => +labelVisible(d.target))
+      .attrTween('transform', d => () => labelTransform(d.current));
+
+    t.on('end', updateSelectedLeaf);
+  } else {
+    selectedLeaf = p;
+    updateSelectedLeaf();
+  }
+
+  updateBreadcrumb(p);
+  showDetail(p);
+  updateHash(p);
+  d3.select('#back').style('display', p.parent ? 'block' : 'none');
+  DETAIL.classed('visible', true);
+}
+
+function arcVisible(d) {
+  return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
+}
+
+function labelVisible(d) {
+  return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
+}
+
+function labelTransform(d) {
+  const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+  const y = (d.y0 + d.y1) / 2 * radius;
+  return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+}
+
+function zoomOut() {
+  const p = parent.datum();
+  if (!p || !p.parent) {
+    parent.datum(root);
+    clicked({altKey: false}, root);
+    d3.select('#back').style('display', 'none');
+    return;
+  }
+  clicked({altKey: false}, p.parent);
+}
+
+function updateBreadcrumb(p) {
+  const bc = d3.select('#breadcrumb');
+  const ancestors = p ? p.ancestors().reverse() : [root];
+  let html = '';
+  ancestors.forEach((d, i) => {
+    if (i > 0) html += '<span class="sep"> &rsaquo; </span>';
+    let n = d.data.name;
+    if (d.data.code && CHAPTER_LABELS[d.data.code]) n = CHAPTER_LABELS[d.data.code];
+    const display = n.length > 40 ? n.slice(0, 38) + '…' : n;
+    html += `<span onclick="breadcrumbClick(${i})">${display}</span>`;
+  });
+  bc.html(html);
+}
+
+function breadcrumbClick(depth) {
+  const p = currentFocus || root;
+  const ancestors = p.ancestors().reverse();
+  if (depth < ancestors.length) {
+    clicked({altKey: false}, ancestors[depth]);
+  }
+}
+
+function showDetail(d) {
+  let html = '';
+  let name = d.data.name;
+  if (d.data.type === 'chapter' && CHAPTER_LABELS[d.data.code]) name = CHAPTER_LABELS[d.data.code];
+  if (d.data.type === 'program') name = d.data.code + ' ' + name;
+  html += `<div class="title">${name}</div>`;
+  html += `<div class="amount">${formatFull(d.value)}</div>`;
+
+  if (d.children && d.children.length > 0) {
+    html += '<div class="chapter-bar">';
+    d.children.sort((a,b) => b.value - a.value).forEach(c => {
+      const pct = (c.value / d.value * 100).toFixed(1);
+      const color = CHAPTER_COLORS[c.data.code] || arcFill(c);
+      let label = c.data.name;
+      if (c.data.code && CHAPTER_LABELS[c.data.code]) label = CHAPTER_LABELS[c.data.code];
+      const ch = nodeHash(c);
+      html += `<div class="chapter-row" onclick="location.hash='#${ch}'">`;
+      html += `<span class="label">${label}</span>`;
+      html += `<span class="bar" style="width:${Math.max(pct*2, 4)}px;background:${color}"></span>`;
+      html += `<span class="val">${formatFull(c.value)}</span>`;
+      html += `<span class="pct2">${pct}%</span>`;
+      html += '</div>';
+    });
+    html += '</div>';
+  }
+
+  // Source PDFs for program nodes
+  if (d.data._source_pdfs && d.data._source_pdfs.length > 0) {
+    html += '<div class="src-link">📄 PDFs: ';
+    d.data._source_pdfs.forEach(function(pdf, i) {
+      if (i > 0) html += ', ';
+      html += `<a href="${SOURCE_BASE}${pdf}" target="_blank">FP${pdf.match(/FP(\d)/)?.[1] || i+1}</a>`;
+    });
+    html += '</div>';
+  }
+
+  DETAIL.html(html).classed('visible', true);
+}
+
+function findNode(codes) {
+  var n = root, c;
+  for (var i = 0; n.children && i < codes.length; i++) {
+    c = codes[i];
+    n = n.children.find(function(ch) { return ch.data.code === c; });
+    if (!n) return null;
+  }
+  return n;
+}
+
+function navigateFromHash() {
+  var h = window.location.hash;
+  if (!h || h === '#') { parent.datum(root); zoomOut(); return; }
+  var n = findNode(h.slice(1).split('/'));
+  if (!n || n === root) { parent.datum(root); zoomOut(); return; }
+  var target = n.children ? n : (n.parent || root);
+  clicked({altKey: false}, target);
+  if (!n.children) {
+    selectedLeaf = n;
+    updateSelectedLeaf();
+    updateBreadcrumb(n);
+    showDetail(n);
+    updateHash(n);
+  }
+}
+
+// Initialise everything once data is loaded
+function addChapterChildren(raw) {
+  function walk(nodes) {
+    nodes.forEach(function(n) {
+      walk(n.children || []);
+      if (n.type === 'program' && n.chapters) {
+        var chs = Object.keys(n.chapters).sort().map(function(k) {
+          return {code: k, name: CHAPTER_LABELS[k] || 'Cap. '+k, type: 'chapter', value: Math.round(n.chapters[k] * 100) / 100};
+        }).filter(function(c) { return c.value > 0; });
+        if (chs.length > 0) n._chapterChildren = chs;
+      }
+    });
+  }
+  walk(raw.sections || []);
+}
+
+function extractPrograms(nodes) {
+  var result = [];
+  nodes.forEach(function(n) {
+    if (n.type === 'program') {
+      var p = {name: n.name, code: n.code, type: 'program', _source_pdfs: n.source_pdfs};
+      if (n._chapterChildren) p.children = n._chapterChildren;
+      result.push(p);
+    } else if (n.children) {
+      result = result.concat(extractPrograms(n.children));
+    }
+  });
+  return result;
+}
+
+function buildHierarchy(raw) {
+  var secs = (raw.sections || []).sort(function(a, b) {
+    return parseFloat(a.number) - parseFloat(b.number);
+  }).map(function(sec) {
+    var progs = extractPrograms(sec.children || []);
+    return {
+      name: sec.number + ' ' + sec.name,
+      code: sec.section_code,
+      type: 'section',
+      children: progs.sort(function(a, b) {
+        return (b.value || 0) - (a.value || 0);
+      })
+    };
+  });
+  return {name: 'Pressupost Generalitat Valenciana 2025', code: null, type: 'root', children: secs};
+}
+
+d3.json("../data.json").then(function(raw) {
+  d3.select('#headerTotal').text(formatFull(raw.meta.total_administration));
+
+  addChapterChildren(raw);
+  var DATA = buildHierarchy(raw);
+
+  DETAIL = d3.select('#detail');
+  TOOLTIP = d3.select('#tooltip');
+
+  svg = d3.select('#chart').append('svg')
+    .attr('viewBox', [-width / 2, -height / 2, width, width])
+    .style('font', '11px sans-serif');
+
+  const hierarchy = d3.hierarchy(DATA)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
+
+  root = d3.partition()
+    .size([2 * Math.PI, hierarchy.height + 1])(hierarchy);
+
+  root.each(d => d.current = d);
+
+  arc = d3.arc()
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+    .padRadius(radius * 1.5)
+    .innerRadius(d => d.y0 * radius)
+    .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1));
+
+  path = svg.append('g')
+    .selectAll('path')
+    .data(root.descendants().slice(1))
+    .join('path')
+    .attr('fill', d => arcFill(d))
+    .attr('fill-opacity', d => arcVisible(d.current) ? (d.children ? 0.65 : 0.45) : 0)
+    .attr('pointer-events', d => arcVisible(d.current) ? 'auto' : 'none')
+    .attr('d', d => arc(d.current));
+
+  path.style('cursor', d => d.children ? 'pointer' : 'default');
+
+  path.append('title')
+    .text(d => {
+      const pathStr = d.ancestors().map(d => d.data.name).reverse().join(' / ');
+      return `${pathStr}\n${formatFull(d.value)}`;
+    });
+
+  label = svg.append('g')
+    .attr('pointer-events', 'none')
+    .attr('text-anchor', 'middle')
+    .style('user-select', 'none')
+    .selectAll('text')
+    .data(root.descendants().slice(1))
+    .join('text')
+    .attr('dy', '0.35em')
+    .attr('fill-opacity', d => +labelVisible(d.current))
+    .attr('transform', d => labelTransform(d.current))
+    .text(d => {
+      let n = d.data.name;
+      if (d.data.code && CHAPTER_LABELS[d.data.code]) n = CHAPTER_LABELS[d.data.code];
+      const maxLen = d.depth <= 1 ? 28 : 20;
+      return n.length > maxLen ? n.slice(0, maxLen - 1) + '…' : n;
+    });
+
+  parent = svg.append('circle')
+    .datum(root)
+    .attr('r', radius)
+    .attr('fill', '#1a5276')
+    .attr('fill-opacity', 0.08)
+    .attr('stroke', '#1a5276')
+    .attr('stroke-width', 1.5)
+    .attr('pointer-events', 'all');
+
+  svg.node().addEventListener('click', function(event) {
+    var d = event.target.__data__;
+    if (d) { clicked(event, d); return; }
+    parent.datum(root);
+    zoomOut();
+  });
+
+  updateBreadcrumb(root);
+  setTimeout(navigateFromHash, 100);
+  window.addEventListener('hashchange', navigateFromHash);
+});
+</script>
+<footer style="text-align:center;color:#999;font-size:12px;padding:12px">
+General |
+<a style="color:#999" href="../universitats/">Universitats</a> |
+<a style="color:#999" href="../isea/">ISEA</a> |
+Source: <a style="color:#999" href="https://hisenda.gva.es/auto/presupuestos/2025/index_val.html">hisenda.gva.es</a>
+</footer>
+</body>
+</html>
